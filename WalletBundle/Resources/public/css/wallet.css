@@ -1,0 +1,5 @@
+@CHARSET "UTF-8";
+
+.al_operation_needs_detail {cursor: pointer; }
+.al_operation_detail_row {display: none; }
+
