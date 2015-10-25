@@ -1,0 +1,111 @@
+{% extends 'AlmoWalletBundle:Default:index.html.twig' %}
+
+{% form_theme form _self %}
+
+{% block form_row %}
+	<div class="form-group">
+        {{ form_errors(form) }}
+        {{ form_label(form) }}
+        <div class="col-sm-3">
+        {{ form_widget(form) }}
+        </div>
+    </div>
+{% endblock form_row %}
+
+{% block form_errors -%}
+    {% if errors|length > 0 -%}
+    <div class="alert-danger alert">
+	    <ul>
+	        {%- for error in errors -%}
+	            <li>{{ error.message }}</li>
+	        {%- endfor -%}
+	    </ul>
+    </div>
+    {%- endif %}
+{%- endblock form_errors %}
+
+
+{% block submenu %}
+<ul role="tablist" class="nav nav-tabs">
+	<li role="presentation" {% if act == 'pay' %}class="active"{% endif %}><a href="{{ path('almo_wallet_wallet_wallet_1', {'act': 'pay'}) }}">Потратить</a></li>
+	<li role="presentation" {% if act == 'add' %}class="active"{% endif %}><a href="{{ path('almo_wallet_wallet_wallet_1', {'act': 'add'}) }}">Получить</a></li>
+	<li role="presentation" {% if act == 'transfer' %}class="active"{% endif %}><a href="{{ path('almo_wallet_wallet_wallet_1', {'act': 'transfer'}) }}">Перевод</a></li>	
+</ul>
+
+{% endblock submenu %}
+
+{% block body %}
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		{% if act == 'pay' %}Добавить покупку{% endif %}
+		{% if act == 'add' %}Получить деньги{% endif %}
+		{% if act == 'transfer' %}Денежные переводы{% endif %}
+	</div>
+	{% for flashMessage in app.session.flashbag.get('notice') %}
+	<div class="alert-success alert">
+		{{ flashMessage }}
+    </div>
+	{% endfor %}
+	<div class="panel-body">
+		<form class="form-horizontal" action="{{ path('almo_wallet_wallet_wallet_1', {'act': act  }) }}" method="post" {{ form_enctype(form) }} method="post">
+			
+			{% if act == 'transfer' %}
+			{{ form_row(form.payments[0].accountId, {'attr' : {'class' : 'form-control' }, 'label_attr' : {'class' : 'col-sm-offset-3 col-sm-1 control-label'}, 'label' : 'Из:' }) }}
+			<div class="form-group">
+		        {{ form_errors(form.payments[0].amount) }}
+		        {{ form_label(form.payments[0].amount, 'Цена:' , { 'label_attr' : {'class' : 'col-sm-offset-3 col-sm-1 control-label'} } ) }}
+	        	<div class="col-sm-3">
+	        	<div class="input-group">
+	        	{{ form_widget(form.payments[0].amount, {'attr' : {'class' : 'form-control'} }) }}
+	        		<div class="input-group-btn">{{ form_widget(form.payments[0].currencyId, {'attr' : {'class' : 'btn'} }) }}</div>
+				</div>
+				</div>
+	    	</div>
+	    	{{ form_row(form.payments[1].accountId, {'attr' : {'class' : 'form-control' }, 'label_attr' : {'class' : 'col-sm-offset-3 col-sm-1 control-label'}, 'label' : 'В:' }) }}
+			<div class="form-group">
+		        {{ form_errors(form.payments[1].amount) }}
+		        {{ form_label(form.payments[1].amount, 'Цена:' , { 'label_attr' : {'class' : 'col-sm-offset-3 col-sm-1 control-label'} } ) }}
+	        	<div class="col-sm-3">
+	        	<div class="input-group">
+	        	{{ form_widget(form.payments[1].amount, {'attr' : {'class' : 'form-control'} }) }}
+	        		<div class="input-group-btn">{{ form_widget(form.payments[1].currencyId, {'attr' : {'class' : 'btn'} }) }}</div>
+				</div>
+				</div>
+	    	</div>
+    	
+			{% endif %}
+			
+			{% if act == 'add' or act == 'pay' %}		
+			{{ form_row(form.title, {'attr' : {'class' : 'form-control' }, 'label_attr' : {'class' : 'col-sm-offset-3 col-sm-1 control-label'}, 'label' : 'Название:' }) }}
+			{{ form_row(form.payments[0].accountId, {'attr' : {'class' : 'form-control' }, 'label_attr' : {'class' : 'col-sm-offset-3 col-sm-1 control-label'}, 'label' : 'Счет:' }) }}
+			<div class="form-group">
+		        {{ form_errors(form.payments[0].amount) }}
+		        {{ form_label(form.payments[0].amount, 'Цена:' , { 'label_attr' : {'class' : 'col-sm-offset-3 col-sm-1 control-label'} } ) }}
+	        	<div class="col-sm-3">
+	        	<div class="input-group">
+	        	{{ form_widget(form.payments[0].amount, {'attr' : {'class' : 'form-control'} }) }}
+	        		<div class="input-group-btn">{{ form_widget(form.payments[0].currencyId, {'attr' : {'class' : 'btn'} }) }}</div>
+				</div>
+				</div>
+	    	</div>
+			{{ form_row(form.tagId, {'attr' : {'class' : 'form-control' }, 'label_attr' : {'class' : 'col-sm-offset-3 col-sm-1 control-label'}, 'label' : 'Тэг:' }) }}
+	    	{% endif %}
+	    	
+			{{ form_row(form.date, {'attr' : {'class' : 'form-control datepicker'}, 'label_attr' : {'class' : 'col-sm-offset-3 col-sm-1 control-label'}, 'label' : 'Дата:' }) }}
+	    	{{ form_row(form.notice, {'attr' : {'class' : 'form-control'}, 'label_attr' : {'class' : 'col-sm-offset-3 col-sm-1 control-label'}, 'label' : 'Заметка:' }) }}
+	    	{{ form_row(form.type) }}		
+		    {{ form_widget(form) }}
+
+			<div class="form-group">
+				<div class="col-sm-offset-4 col-sm-3">
+					<button type="submit" class="btn btn-default">Оформить</button>
+				</div>
+			</div>
+		</form>	
+	</div>
+</div>
+	
+</form>
+
+{% endblock body %}

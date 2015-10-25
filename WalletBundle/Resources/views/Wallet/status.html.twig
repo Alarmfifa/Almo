@@ -1,0 +1,49 @@
+{% extends 'AlmoWalletBundle:Default:index.html.twig' %}
+
+{% block body %}
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		Состояние счета
+	</div>
+	{% for flashMessage in app.session.flashbag.get('notice') %}
+	<div class="alert-success alert">
+		{{ flashMessage }}
+    </div>
+	{% endfor %}
+	
+	<div class="panel-body">
+		<div class="list-group">
+		{% for account in accounts %}
+			<a  class="list-group-item{% if account[0].accountId.id == app.request.get('accountId') %} active{% endif %}" href="{{ path('almo_wallet_wallet_status', {'accountId': account[0].accountId.id })  }}">
+			{{ account[0].accountId.title }} {{ account['total'] }} {{ account[0].currencyId.short }}
+			</a>
+		{% endfor %}
+		</div>
+		
+		{% if payments is not empty %}
+		<table class="table table-condensed table-hover">
+		<thead>
+			<tr>
+				<th>Наименование</th>
+				<th>Тег</th>
+				<th>Стоимость</th>
+				<th>Дата</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for payment in payments %}
+			<tr>
+				<td>{{ payment.operationId.title }}</td>
+				<td>{{ payment.operationId.tagId }}</td>
+				<td>{{ payment.amount }} {{ payment.currencyId.short }}</td>
+				<td>{{ payment.operationId.date|date("Y-m-d H:i") }}</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+		</table>
+		{% endif %}
+	</div>
+</div>
+
+{% endblock body %}
