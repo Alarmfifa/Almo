@@ -22,6 +22,9 @@
 !bin/symfony_requirements
 /vendor/
 
+# Doctrine
+*/Entity/*~
+
 # Assets and user uploads
 /web/bundles/
 /web/uploads/
