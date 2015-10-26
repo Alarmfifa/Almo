@@ -3,3 +3,9 @@
 .al_operation_needs_detail {cursor: pointer; }
 .al_operation_detail_row {display: none; }
 
+@media only screen and (min-width : 320px) and (max-width : 480px) {
+	.al_status .list-group { padding : 0 15px 0 15px; }
+	.al_status .panel-body { padding : 15px 0 15px 0; }
+	.al_status.container { padding: 0; }
+	.table-condensed {font-size: small; }    
+}

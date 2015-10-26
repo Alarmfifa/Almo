@@ -51,10 +51,10 @@
 		<form class="form-horizontal" action="{{ path('almo_wallet_wallet_wallet_1', {'act': act  }) }}" method="post" {{ form_enctype(form) }} method="post">
 			
 			{% if act == 'transfer' %}
-			{{ form_row(form.payments[0].accountId, {'attr' : {'class' : 'form-control' }, 'label_attr' : {'class' : 'col-sm-offset-3 col-sm-1 control-label'}, 'label' : 'Из:' }) }}
+			{{ form_row(form.payments[0].accountId, {'attr' : {'class' : 'form-control' }, 'label_attr' : {'class' : 'col-sm-offset-3 col-sm-2 control-label'}, 'label' : 'Из:' }) }}
 			<div class="form-group">
 		        {{ form_errors(form.payments[0].amount) }}
-		        {{ form_label(form.payments[0].amount, 'Цена:' , { 'label_attr' : {'class' : 'col-sm-offset-3 col-sm-1 control-label'} } ) }}
+		        {{ form_label(form.payments[0].amount, 'Цена:' , { 'label_attr' : {'class' : 'col-sm-offset-3 col-sm-2 control-label'} } ) }}
 	        	<div class="col-sm-3">
 	        	<div class="input-group">
 	        	{{ form_widget(form.payments[0].amount, {'attr' : {'class' : 'form-control'} }) }}
@@ -62,10 +62,10 @@
 				</div>
 				</div>
 	    	</div>
-	    	{{ form_row(form.payments[1].accountId, {'attr' : {'class' : 'form-control' }, 'label_attr' : {'class' : 'col-sm-offset-3 col-sm-1 control-label'}, 'label' : 'В:' }) }}
+	    	{{ form_row(form.payments[1].accountId, {'attr' : {'class' : 'form-control' }, 'label_attr' : {'class' : 'col-sm-offset-3 col-sm-2 control-label'}, 'label' : 'В:' }) }}
 			<div class="form-group">
 		        {{ form_errors(form.payments[1].amount) }}
-		        {{ form_label(form.payments[1].amount, 'Цена:' , { 'label_attr' : {'class' : 'col-sm-offset-3 col-sm-1 control-label'} } ) }}
+		        {{ form_label(form.payments[1].amount, 'Цена:' , { 'label_attr' : {'class' : 'col-sm-offset-3 col-sm-2 control-label'} } ) }}
 	        	<div class="col-sm-3">
 	        	<div class="input-group">
 	        	{{ form_widget(form.payments[1].amount, {'attr' : {'class' : 'form-control'} }) }}
@@ -77,11 +77,11 @@
 			{% endif %}
 			
 			{% if act == 'add' or act == 'pay' %}		
-			{{ form_row(form.title, {'attr' : {'class' : 'form-control' }, 'label_attr' : {'class' : 'col-sm-offset-3 col-sm-1 control-label'}, 'label' : 'Название:' }) }}
-			{{ form_row(form.payments[0].accountId, {'attr' : {'class' : 'form-control' }, 'label_attr' : {'class' : 'col-sm-offset-3 col-sm-1 control-label'}, 'label' : 'Счет:' }) }}
+			{{ form_row(form.title, {'attr' : {'class' : 'form-control' }, 'label_attr' : {'class' : 'col-sm-offset-3 col-sm-2 control-label'}, 'label' : 'Название:' }) }}
+			{{ form_row(form.payments[0].accountId, {'attr' : {'class' : 'form-control' }, 'label_attr' : {'class' : 'col-sm-offset-3 col-sm-2 control-label'}, 'label' : 'Счет:' }) }}
 			<div class="form-group">
 		        {{ form_errors(form.payments[0].amount) }}
-		        {{ form_label(form.payments[0].amount, 'Цена:' , { 'label_attr' : {'class' : 'col-sm-offset-3 col-sm-1 control-label'} } ) }}
+		        {{ form_label(form.payments[0].amount, 'Цена:' , { 'label_attr' : {'class' : 'col-sm-offset-3 col-sm-2 control-label'} } ) }}
 	        	<div class="col-sm-3">
 	        	<div class="input-group">
 	        	{{ form_widget(form.payments[0].amount, {'attr' : {'class' : 'form-control'} }) }}
@@ -89,11 +89,11 @@
 				</div>
 				</div>
 	    	</div>
-			{{ form_row(form.tagId, {'attr' : {'class' : 'form-control' }, 'label_attr' : {'class' : 'col-sm-offset-3 col-sm-1 control-label'}, 'label' : 'Тэг:' }) }}
+			{{ form_row(form.tagId, {'attr' : {'class' : 'form-control' }, 'label_attr' : {'class' : 'col-sm-offset-3 col-sm-2 control-label'}, 'label' : 'Тэг:' }) }}
 	    	{% endif %}
 	    	
-			{{ form_row(form.date, {'attr' : {'class' : 'form-control datepicker'}, 'label_attr' : {'class' : 'col-sm-offset-3 col-sm-1 control-label'}, 'label' : 'Дата:' }) }}
-	    	{{ form_row(form.notice, {'attr' : {'class' : 'form-control'}, 'label_attr' : {'class' : 'col-sm-offset-3 col-sm-1 control-label'}, 'label' : 'Заметка:' }) }}
+			{{ form_row(form.date, {'attr' : {'class' : 'form-control datepicker'}, 'label_attr' : {'class' : 'col-sm-offset-3 col-sm-2 control-label'}, 'label' : 'Дата:' }) }}
+	    	{{ form_row(form.notice, {'attr' : {'class' : 'form-control'}, 'label_attr' : {'class' : 'col-sm-offset-3 col-sm-2 control-label'}, 'label' : 'Заметка:' }) }}
 	    	{{ form_row(form.type) }}		
 		    {{ form_widget(form) }}
 
