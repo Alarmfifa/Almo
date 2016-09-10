@@ -1,0 +1,9 @@
+almo_user:
+    resource: "@AlmoUserBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+almo_wallet:
+    resource: "@AlmoWalletBundle/Controller/"
+    type:     annotation
+    prefix:   /
