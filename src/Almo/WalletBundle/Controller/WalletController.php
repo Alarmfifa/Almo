@@ -6,17 +6,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\HttpFoundation\Response;
 use Almo\WalletBundle\Entity\Operations;
 use Almo\WalletBundle\Entity\Wallet;
 use Symfony\Component\HttpFoundation\Request;
-use Almo\WalletBundle\Form\TestWallet;
 use Almo\WalletBundle\Entity\Accounts;
 use Almo\WalletBundle\Entity\Payments;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Almo\WalletBundle\Form\PaymentsType;
 use Almo\WalletBundle\Form\OperationsType;
-use Symfony\Bundle\SecurityBundle\Tests\Functional\Bundle\AclBundle\Entity\Car;
 
 
 class WalletController extends Controller
@@ -40,7 +35,7 @@ class WalletController extends Controller
     {
     	
     	$tagRep = $this->getDoctrine()->getRepository('AlmoWalletBundle:Tags');
-    	$accRep = $this->getDoctrine()->getRepository('AlmoWalletBundle:Accounts');    	
+    	$accRep = $this->getDoctrine()->getRepository('AlmoWalletBundle:Accounts');
     	$userId = $this->get('security.token_storage')->getToken()->getUser()->getId();
     	$user = $this->get('security.token_storage')->getToken()->getUser();
 
@@ -53,10 +48,10 @@ class WalletController extends Controller
     		$operations->addPayment(new Payments());
     	}
     	
-    	$form = $this->createForm(new OperationsType(), $operations, array('tagRep' => $tagRep, 'userId' => $userId, 'accRep' => $accRep, 'act' => $act, 'user' => $user ));
+    	$form = $this->createForm(OperationsType::class, $operations, array('tagRep' => $tagRep, 'userId' => $userId, 'accRep' => $accRep, 'act' => $act, 'user' => $user ));
      	
     	if ($req->getMethod() == 'POST') {
-    		$form->bind($req);
+    		$form->handleRequest($req);
     		
     		if ($form->isValid()) {
     			
