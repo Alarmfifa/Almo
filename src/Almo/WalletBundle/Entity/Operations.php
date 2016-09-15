@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="Almo\WalletBundle\Entity\OperationsRepository")
- * @ORM\Table(name="Operations")
+ * @ORM\Table()
  * 
  */
 class Operations
