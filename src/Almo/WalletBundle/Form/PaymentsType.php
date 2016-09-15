@@ -4,7 +4,10 @@ namespace Almo\WalletBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
 
 class PaymentsType extends AbstractType
 {
@@ -18,25 +21,26 @@ class PaymentsType extends AbstractType
 		// TODO replace accountRepository to Entity    	
         $builder
             ->add('amount')
-	        ->add('accountId', 'entity', array(
+	        ->add('accountId',  EntityType::class, array(
 	        		'class' => 'AlmoWalletBundle:Accounts',
 	        		'choices' => $options['accRep']->findByUserId($options['userId']),
 	        	))
-            ->add('currencyId', 'entity', array('class'=>'AlmoWalletBundle:Currency', 'property'=>'short'));
+            ->add('currencyId',  EntityType::class, array('class'=>'AlmoWalletBundle:Currency', 'choice_label'=>'short'));
         ;
     }
     
     /**
-     * @param OptionsResolverInterface $resolver
+     * @param OptionsResolver $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions( OptionsResolver $resolver ) 
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults( [
             'data_class' => 'Almo\WalletBundle\Entity\Payments',
         	'userId' => false,
         	'accRep' => false
-        ));
+        ] );
     }
+
 
     /**
      * @return string
