@@ -26,6 +26,7 @@ al_status
 		</div>
 
 		{% if payments is not empty %}
+		
 		<table class="table table-condensed table-hover">
 			<thead>
 				<tr>
@@ -54,6 +55,11 @@ al_status
 				{% endfor %}
 			</tbody>
 		</table>
+            {% if app.request.get('page') != 'all' %}
+            <div class="navigation">
+                {{ knp_pagination_render(payments) }}
+            </div>
+            {% endif %}
 		{% endif %}
 	</div>
 </div>

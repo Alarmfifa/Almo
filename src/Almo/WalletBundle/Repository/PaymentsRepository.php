@@ -25,7 +25,7 @@ class PaymentsRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function getUserAccountPayments($accountId, \Almo\UserBundle\Entity\Users $User)
+    public function getUserAccountPaymentsQuery($accountId, \Almo\UserBundle\Entity\Users $User)
     {
         $query = $this->getEntityManager()
             ->createQuery("SELECT p FROM Almo\WalletBundle\Entity\Payments p
@@ -36,7 +36,7 @@ class PaymentsRepository extends EntityRepository
             ->setParameter('userId', $User->getId())
             ->setParameter('accountId', $accountId);
 
-        return $query->getResult();
+        return $query;
     }
 
     public function findAllOrderByDate()

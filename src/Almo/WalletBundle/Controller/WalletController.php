@@ -2,15 +2,15 @@
 
 namespace Almo\WalletBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Almo\WalletBundle\Entity\Operations;
-use Almo\WalletBundle\Entity\Wallet;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Almo\WalletBundle\Entity\Accounts;
+use Almo\WalletBundle\Entity\Operations;
 use Almo\WalletBundle\Entity\Payments;
+use Almo\WalletBundle\Entity\Wallet;
 use Almo\WalletBundle\Form\OperationsType;
 
 class WalletController extends Controller
@@ -29,9 +29,8 @@ class WalletController extends Controller
     /**
      * @Route("/", defaults={"act" = "pay"})
      * @Route("/wallet/{act}", defaults={"act" = "pay"}, requirements={"act" = "pay|add|transfer" } )
-     *
-     * @method ({"GET", "POST"})
-     *         @Template("AlmoWalletBundle:Wallet:wallet_form.html.twig")
+     * @Method ({"GET", "POST"})
+     * @Template("AlmoWalletBundle:Wallet:wallet_form.html.twig")
      */
     public function walletAction($act, Request $req)
     {
@@ -73,7 +72,7 @@ class WalletController extends Controller
                     $paym[0]->setAmount(-1 * $amount);
                 }
 
-                $em = $this->getDoctrine()->getEntityManager();
+                $em = $this->getDoctrine()->getManager();
                 $em->persist($operations);
                 // try {
                 // TODO need try/catch
@@ -98,28 +97,30 @@ class WalletController extends Controller
     }
 
     /**
-     * @Route("/status/{accountId}", defaults={"accountId" = "false"}, requirements={"accountId" = "\d+" } )
-     *
-     * @method ({"GET"})
-     *         @Template("AlmoWalletBundle:Wallet:status.html.twig")
+     * @Route("/status/{accountId}/{page}", defaults={"accountId" = "false", "page" = 1}, requirements={"accountId" = "\d+", "page" = "\d+|all" } )
+     * @Method({"GET"})
+     * @Template("AlmoWalletBundle:Wallet:status.html.twig")
      */
-    public function statusAction($accountId)
+    public function statusAction($accountId, $page)
     {
         $em = $this->getDoctrine()->getManager();
-        $accounts = $em->getRepository('AlmoWalletBundle:Payments')->getUserAccountsStatus($this->get('security.token_storage')
-            ->getToken()
-            ->getUser());
-        $payments = array();
+        $accounts = $em->getRepository('AlmoWalletBundle:Payments')->getUserAccountsStatus($this->get('security.token_storage')->getToken()->getUser());
 
+        $limit = 50;    // TODO put it into config
+
+        // show list of payments
         if ($accountId) {
-            $payments = $em->getRepository('AlmoWalletBundle:Payments')->getUserAccountPayments($accountId, $this->get('security.token_storage')
-                ->getToken()
-                ->getUser());
+            $paginator = $this->get('knp_paginator');
+
+            $query = $em->getRepository('AlmoWalletBundle:Payments')->getUserAccountPaymentsQuery($accountId, $this->get('security.token_storage')->getToken()->getUser());
+
+            if ($page == 'all') {
+                $payments = $query->getResult();
+            } else {
+                $payments = $paginator->paginate($query, $page, $limit);
+            }
         }
 
-        return array(
-            'accounts' => $accounts,
-            'payments' => $payments,
-        );
+        return ['accounts' => $accounts, 'payments' => $payments];
     }
 }
