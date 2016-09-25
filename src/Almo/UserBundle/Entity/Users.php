@@ -9,42 +9,39 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="Users")
  */
-
 class Users implements UserInterface
 {
-	/**
-	 * @ORM\Id
-	 * @ORM\Column(type="integer")
-	 * @ORM\GeneratedValue(strategy="AUTO")
-	 */
-	private $id;
-	
-	/**
-	 * @ORM\Column(type="string", length=30, unique=true)
-	 */
-	private $login;
-	
-	/**
-	 * @ORM\Column(type="string", length=64)
-	 */
-	private $password;
-	
-	/**
-	 * @ORM\Column(type="datetime")
-	 */
-	private $registration_date;
-	
-	/**
-	 * @ORM\Column(type="boolean")
-	 */
-	private $active;
-	
-	
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
 
     /**
-     * Get id
+     * @ORM\Column(type="string", length=30, unique=true)
+     */
+    private $login;
+
+    /**
+     * @ORM\Column(type="string", length=64)
+     */
+    private $password;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $registration_date;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $active;
+
+    /**
+     * Get id.
      *
-     * @return integer 
+     * @return int
      */
     public function getId()
     {
@@ -52,9 +49,10 @@ class Users implements UserInterface
     }
 
     /**
-     * Set login
+     * Set login.
      *
      * @param string $login
+     *
      * @return Users
      */
     public function setLogin($login)
@@ -65,9 +63,9 @@ class Users implements UserInterface
     }
 
     /**
-     * Get login
+     * Get login.
      *
-     * @return string 
+     * @return string
      */
     public function getLogin()
     {
@@ -75,9 +73,10 @@ class Users implements UserInterface
     }
 
     /**
-     * Set password
+     * Set password.
      *
      * @param string $password
+     *
      * @return Users
      */
     public function setPassword($password)
@@ -88,9 +87,9 @@ class Users implements UserInterface
     }
 
     /**
-     * Get password
+     * Get password.
      *
-     * @return string 
+     * @return string
      */
     public function getPassword()
     {
@@ -98,9 +97,10 @@ class Users implements UserInterface
     }
 
     /**
-     * Set registration_date
+     * Set registration_date.
      *
      * @param \DateTime $registrationDate
+     *
      * @return Users
      */
     public function setRegistrationDate($registrationDate)
@@ -111,9 +111,9 @@ class Users implements UserInterface
     }
 
     /**
-     * Get registration_date
+     * Get registration_date.
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getRegistrationDate()
     {
@@ -121,9 +121,10 @@ class Users implements UserInterface
     }
 
     /**
-     * Set active
+     * Set active.
      *
-     * @param boolean $active
+     * @param bool $active
+     *
      * @return Users
      */
     public function setActive($active)
@@ -134,44 +135,44 @@ class Users implements UserInterface
     }
 
     /**
-     * Get active
+     * Get active.
      *
-     * @return boolean 
+     * @return bool
      */
     public function getActive()
     {
         return $this->active;
     }
-    
+
     public function getRoles()
     {
-    	// everybody are users
-    	return array('ROLE_USER');
+        // everybody are users
+        return array(
+            'ROLE_USER',
+        );
     }
-    
+
     public function getSalt()
     {
-    	// not solt yet
-    	return null;
+        // not solt yet
+        return null;
     }
-    
+
     public function eraseCredentials()
     {
     }
-    
+
     public function getUsername()
     {
-    	// just redeclare
-    	return $this->getLogin();
+        // just redeclare
+        return $this->getLogin();
     }
-    
+
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
         $this->accounts = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
- 
 }

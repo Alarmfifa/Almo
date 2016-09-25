@@ -5,7 +5,7 @@ namespace Almo\WalletBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Currency
+ * Currency.
  *
  * @ORM\Table()
  * @ORM\Entity
@@ -13,33 +13,26 @@ use Doctrine\ORM\Mapping as ORM;
 class Currency
 {
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
+     * @var int @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="title", type="string", length=20)
+     * @var string @ORM\Column(name="title", type="string", length=20)
      */
     private $title;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="short", type="string", length=5)
+     * @var string @ORM\Column(name="short", type="string", length=5)
      */
     private $short;
 
-
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer 
+     * @return int
      */
     public function getId()
     {
@@ -47,9 +40,10 @@ class Currency
     }
 
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
+     *
      * @return Currency
      */
     public function setTitle($title)
@@ -60,9 +54,9 @@ class Currency
     }
 
     /**
-     * Get title
+     * Get title.
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -70,9 +64,10 @@ class Currency
     }
 
     /**
-     * Set short
+     * Set short.
      *
      * @param string $short
+     *
      * @return Currency
      */
     public function setShort($short)
@@ -83,20 +78,20 @@ class Currency
     }
 
     /**
-     * Get short
+     * Get short.
      *
-     * @return string 
+     * @return string
      */
     public function getShort()
     {
         return $this->short;
     }
-    
+
     /**
-     * magic for textual representation
+     * magic for textual representation.
      */
     public function __toString()
     {
-    	return self::getShort();
+        return self::getShort();
     }
 }

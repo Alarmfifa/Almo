@@ -7,61 +7,57 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="Almo\WalletBundle\Entity\OperationsRepository")
  * @ORM\Table()
- * 
  */
 class Operations
 {
-	/**
-	 * @ORM\Id
-	 * @ORM\Column(type="integer")
-	 * @ORM\GeneratedValue(strategy="AUTO")
-	 */
-	private $id;
-	
-	/**
-	 * @ORM\ManyToOne(targetEntity="Almo\UserBundle\Entity\Users", inversedBy="operations")
-	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-	 * 
-	 */
-	private $userId;
-	
-	/**
-	 * @ORM\Column(type="string", length=80)
-	 */
-	private $title;
-	
-	/**
-	 * @ORM\Column(type="text", nullable=true)
-	 */
-	private $notice;
-	
-	/**
-	 * @ORM\ManyToOne(targetEntity="Tags")
-	 * @ORM\JoinColumn(name="tag_id", referencedColumnName="id")
-	 */
-	private $tagId;
-
-	
-	/**
-	 * @ORM\Column(type="datetime")
-	 */
-	private $date;
-	
-	/**
-	 * @ORM\Column(type="string", length=20)
-	 */
-	private $type;
-	
-	/**
-	 * @ORM\OneToMany(targetEntity="Payments", mappedBy="operationId", cascade={"persist"})
-	 */
-	private $payments;
-
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
 
     /**
-     * Get id
+     * @ORM\ManyToOne(targetEntity="Almo\UserBundle\Entity\Users", inversedBy="operations")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $userId;
+
+    /**
+     * @ORM\Column(type="string", length=80)
+     */
+    private $title;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $notice;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Tags")
+     * @ORM\JoinColumn(name="tag_id", referencedColumnName="id")
+     */
+    private $tagId;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $date;
+
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    private $type;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Payments", mappedBy="operationId", cascade={"persist"})
+     */
+    private $payments;
+
+    /**
+     * Get id.
      *
-     * @return integer 
+     * @return int
      */
     public function getId()
     {
@@ -69,9 +65,10 @@ class Operations
     }
 
     /**
-     * Set user_id
+     * Set user_id.
      *
-     * @param integer $userId
+     * @param int $userId
+     *
      * @return Operations
      */
     public function setUserId($userId)
@@ -82,9 +79,9 @@ class Operations
     }
 
     /**
-     * Get user_id
+     * Get user_id.
      *
-     * @return integer 
+     * @return int
      */
     public function getUserId()
     {
@@ -92,9 +89,10 @@ class Operations
     }
 
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
+     *
      * @return Operations
      */
     public function setTitle($title)
@@ -105,9 +103,9 @@ class Operations
     }
 
     /**
-     * Get title
+     * Get title.
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -115,9 +113,10 @@ class Operations
     }
 
     /**
-     * Set date
+     * Set date.
      *
      * @param \DateTime $date
+     *
      * @return Operations
      */
     public function setDate($date)
@@ -128,9 +127,9 @@ class Operations
     }
 
     /**
-     * Get date
+     * Get date.
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -138,9 +137,10 @@ class Operations
     }
 
     /**
-     * Set notice
+     * Set notice.
      *
      * @param string $notice
+     *
      * @return Operations
      */
     public function setNotice($notice)
@@ -151,9 +151,9 @@ class Operations
     }
 
     /**
-     * Get notice
+     * Get notice.
      *
-     * @return string 
+     * @return string
      */
     public function getNotice()
     {
@@ -161,9 +161,10 @@ class Operations
     }
 
     /**
-     * Set tagId
+     * Set tagId.
      *
      * @param \Almo\WalletBundle\Entity\Tags $tagId
+     *
      * @return Operations
      */
     public function setTagId(\Almo\WalletBundle\Entity\Tags $tagId = null)
@@ -174,9 +175,9 @@ class Operations
     }
 
     /**
-     * Get tagId
+     * Get tagId.
      *
-     * @return \Almo\WalletBundle\Entity\Tags 
+     * @return \Almo\WalletBundle\Entity\Tags
      */
     public function getTagId()
     {
@@ -184,9 +185,10 @@ class Operations
     }
 
     /**
-     * Set type
+     * Set type.
      *
      * @param string $type
+     *
      * @return Operations
      */
     public function setType($type)
@@ -197,16 +199,17 @@ class Operations
     }
 
     /**
-     * Get type
+     * Get type.
      *
-     * @return string 
+     * @return string
      */
     public function getType()
     {
         return $this->type;
     }
+
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -214,22 +217,23 @@ class Operations
     }
 
     /**
-     * Add payments
+     * Add payments.
      *
      * @param \Almo\WalletBundle\Entity\Payments $payments
+     *
      * @return Operations
      */
     public function addPayment(\Almo\WalletBundle\Entity\Payments $payments)
     {
-    	// don't forget to add reference id
+        // don't forget to add reference id
         $payments->setOperationId($this);
         $this->payments[] = $payments;
-        
+
         return $this;
     }
 
     /**
-     * Remove payments
+     * Remove payments.
      *
      * @param \Almo\WalletBundle\Entity\Payments $payments
      */
@@ -239,9 +243,9 @@ class Operations
     }
 
     /**
-     * Get payments
+     * Get payments.
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPayments()
     {

@@ -3,10 +3,9 @@
 namespace Almo\WalletBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Config\Definition\IntegerNode;
 
 /**
- * Tags
+ * Tags.
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Almo\WalletBundle\Repository\TagsRepository")
@@ -14,40 +13,32 @@ use Symfony\Component\Config\Definition\IntegerNode;
 class Tags
 {
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
+     * @var int @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="title", type="string", length=80)
+     * @var string @ORM\Column(name="title", type="string", length=80)
      */
     private $title;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="pay_type", type="integer")
+     * @var int @ORM\Column(name="pay_type", type="integer")
      */
     private $payType;
-    
-	/**
-	 * @ORM\ManyToOne(targetEntity="Almo\UserBundle\Entity\Users", inversedBy="operations")
-	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-	 * 
-	 */
-	private $userId;
-
 
     /**
-     * Get id
+     * @ORM\ManyToOne(targetEntity="Almo\UserBundle\Entity\Users", inversedBy="operations")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $userId;
+
+    /**
+     * Get id.
      *
-     * @return integer 
+     * @return int
      */
     public function getId()
     {
@@ -55,9 +46,10 @@ class Tags
     }
 
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
+     *
      * @return Tags
      */
     public function setTitle($title)
@@ -68,9 +60,9 @@ class Tags
     }
 
     /**
-     * Get title
+     * Get title.
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -78,9 +70,10 @@ class Tags
     }
 
     /**
-     * Set payType
+     * Set payType.
      *
-     * @param integer $payType
+     * @param int $payType
+     *
      * @return Tags
      */
     public function setPayType($payType)
@@ -91,30 +84,28 @@ class Tags
     }
 
     /**
-     * Get payType
+     * Get payType.
      *
-     * @return integer 
+     * @return int
      */
     public function getPayType()
     {
         return $this->payType;
     }
-    
+
     /**
-     * magic for textual representation
+     * magic for textual representation.
      */
     public function __toString()
     {
-    	return self::getTitle();
+        return self::getTitle();
     }
-    
-
-    
 
     /**
-     * Set userId
+     * Set userId.
      *
      * @param \Almo\UserBundle\Entity\Users $userId
+     *
      * @return Tags
      */
     public function setUserId(\Almo\UserBundle\Entity\Users $userId = null)
@@ -125,9 +116,9 @@ class Tags
     }
 
     /**
-     * Get userId
+     * Get userId.
      *
-     * @return \Almo\UserBundle\Entity\Users 
+     * @return \Almo\UserBundle\Entity\Users
      */
     public function getUserId()
     {

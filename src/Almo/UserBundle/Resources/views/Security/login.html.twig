@@ -8,17 +8,20 @@
 <div class="panel panel-default">
 	<div class="panel-heading">Авторизуйтесь, пожалуйста</div>
 	<div class="panel-body">
-		<form class="form-horizontal" action="{{ path('almo_user_security_logincheck') }}" method="post">
+		<form class="form-horizontal"
+			action="{{ path('almo_user_security_logincheck') }}" method="post">
 			<div class="form-group">
 				<label for="username" class="col-sm-offset-3 col-sm-1 control-label">Логин:</label>
 				<div class="col-sm-3">
-					<input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control" />
+					<input type="text" id="username" name="_username"
+						value="{{ last_username }}" class="form-control" />
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="password" class="col-sm-offset-3 col-sm-1 control-label">Пароль:</label>
 				<div class="col-sm-3">
-					<input type="password" id="password" name="_password"  class="form-control" />
+					<input type="password" id="password" name="_password"
+						class="form-control" />
 				</div>
 			</div>
 			<div class="form-group">
@@ -26,7 +29,7 @@
 					<button type="submit" class="btn btn-default">Войти</button>
 				</div>
 			</div>
-		</form>	
+		</form>
 	</div>
 </div>
 

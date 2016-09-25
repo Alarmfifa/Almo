@@ -5,7 +5,7 @@ namespace Almo\WalletBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Payments
+ * Payments.
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Almo\WalletBundle\Repository\PaymentsRepository")
@@ -13,51 +13,39 @@ use Doctrine\ORM\Mapping as ORM;
 class Payments
 {
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
+     * @var int @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * @var integer
-     * 
-     * @ORM\ManyToOne(targetEntity="Operations", inversedBy="payments")
+     * @var int @ORM\ManyToOne(targetEntity="Operations", inversedBy="payments")
      * @ORM\JoinColumn(name="operation_id", referencedColumnName="id")
      */
     private $operationId;
 
-
     /**
-     * @var integer
-     *
-     * @ORM\ManyToOne(targetEntity="Accounts", inversedBy="payments")
+     * @var int @ORM\ManyToOne(targetEntity="Accounts", inversedBy="payments")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id")
      */
     private $accountId;
 
     /**
-     * @var float
-     *
-     * @ORM\Column(name="amount", type="float")
+     * @var float @ORM\Column(name="amount", type="float")
      */
     private $amount;
 
     /**
-     * @var integer
-     * 
-     * @ORM\ManyToOne(targetEntity="Currency")
+     * @var int @ORM\ManyToOne(targetEntity="Currency")
      * @ORM\JoinColumn(name="currency_id", referencedColumnName="id")
      */
     private $currencyId;
 
-
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer 
+     * @return int
      */
     public function getId()
     {
@@ -65,9 +53,10 @@ class Payments
     }
 
     /**
-     * Set operationId
+     * Set operationId.
      *
-     * @param integer $operationId
+     * @param int $operationId
+     *
      * @return Payments
      */
     public function setOperationId($operationId)
@@ -78,9 +67,9 @@ class Payments
     }
 
     /**
-     * Get operationId
+     * Get operationId.
      *
-     * @return integer 
+     * @return int
      */
     public function getOperationId()
     {
@@ -88,9 +77,10 @@ class Payments
     }
 
     /**
-     * Set accountId
+     * Set accountId.
      *
-     * @param integer $accountId
+     * @param int $accountId
+     *
      * @return Payments
      */
     public function setAccountId($accountId)
@@ -101,9 +91,9 @@ class Payments
     }
 
     /**
-     * Get accountId
+     * Get accountId.
      *
-     * @return integer 
+     * @return int
      */
     public function getAccountId()
     {
@@ -111,9 +101,10 @@ class Payments
     }
 
     /**
-     * Set amount
+     * Set amount.
      *
      * @param float $amount
+     *
      * @return Payments
      */
     public function setAmount($amount)
@@ -124,9 +115,9 @@ class Payments
     }
 
     /**
-     * Get amount
+     * Get amount.
      *
-     * @return float 
+     * @return float
      */
     public function getAmount()
     {
@@ -134,9 +125,10 @@ class Payments
     }
 
     /**
-     * Set currencyId
+     * Set currencyId.
      *
-     * @param integer $currencyId
+     * @param int $currencyId
+     *
      * @return Payments
      */
     public function setCurrencyId($currencyId)
@@ -147,9 +139,9 @@ class Payments
     }
 
     /**
-     * Get currencyId
+     * Get currencyId.
      *
-     * @return integer 
+     * @return int
      */
     public function getCurrencyId()
     {

@@ -5,7 +5,7 @@ namespace Almo\WalletBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Accounts
+ * Accounts.
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Almo\WalletBundle\Repository\AccountsRepository")
@@ -13,25 +13,19 @@ use Doctrine\ORM\Mapping as ORM;
 class Accounts
 {
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
+     * @var int @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="title", type="string", length=80)
+     * @var string @ORM\Column(name="title", type="string", length=80)
      */
     private $title;
 
     /**
-     * @var integer
-     *
-     * @ORM\ManyToOne(targetEntity="Almo\UserBundle\Entity\Users")
+     * @var int @ORM\ManyToOne(targetEntity="Almo\UserBundle\Entity\Users")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $userId;
@@ -40,12 +34,11 @@ class Accounts
      * @ORM\OneToMany(targetEntity="Payments", mappedBy="accountId")
      */
     private $payments;
-  
-    
+
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer 
+     * @return int
      */
     public function getId()
     {
@@ -53,9 +46,10 @@ class Accounts
     }
 
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
+     *
      * @return Accounts
      */
     public function setTitle($title)
@@ -66,9 +60,9 @@ class Accounts
     }
 
     /**
-     * Get title
+     * Get title.
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -76,9 +70,10 @@ class Accounts
     }
 
     /**
-     * Set userId
+     * Set userId.
      *
-     * @param integer $userId
+     * @param int $userId
+     *
      * @return Accounts
      */
     public function setUserId($userId)
@@ -89,26 +84,25 @@ class Accounts
     }
 
     /**
-     * Get userId
+     * Get userId.
      *
-     * @return integer 
+     * @return int
      */
     public function getUserId()
     {
         return $this->userId;
     }
-    
+
     /**
-     * magic for textual representation
+     * magic for textual representation.
      */
     public function __toString()
     {
-    	return self::getTitle();
+        return self::getTitle();
     }
 
-
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -116,9 +110,10 @@ class Accounts
     }
 
     /**
-     * Add payments
+     * Add payments.
      *
      * @param \Almo\WalletBundle\Entity\Payments $payments
+     *
      * @return Accounts
      */
     public function addPayment(\Almo\WalletBundle\Entity\Payments $payments)
@@ -129,7 +124,7 @@ class Accounts
     }
 
     /**
-     * Remove payments
+     * Remove payments.
      *
      * @param \Almo\WalletBundle\Entity\Payments $payments
      */
@@ -139,9 +134,9 @@ class Accounts
     }
 
     /**
-     * Get payments
+     * Get payments.
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPayments()
     {

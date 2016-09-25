@@ -10,23 +10,20 @@ class TagsType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('title')
-            ->add('payType')
-        ;
+        $builder->add('title')->add('payType');
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Almo\WalletBundle\Entity\Tags'
+            'data_class' => 'Almo\WalletBundle\Entity\Tags',
         ));
     }
 
