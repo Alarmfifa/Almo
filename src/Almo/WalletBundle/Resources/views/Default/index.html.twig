@@ -56,7 +56,12 @@
 					{% if app.request.get('_route') == 'almo_wallet_wallet_status' %}
 					class="active" {% endif %}><a
 					href="{{ path('almo_wallet_wallet_status') }}">Состояние</a></li>
-				<li><a href="#">Настройки</a></li>
+				<li>
+				<li
+                    {% if app.request.get('_route') == 'almo_wallet_analytics_index' %}
+                    class="active" {% endif %}><a
+                    href="{{ path('almo_wallet_analytics_index') }}">Аналитика</a></li>
+                <li><a href="#">Настройки</a></li>
 				{% endblock %}
 			</ul>
 			<ul class="nav navbar-nav navbar-right">

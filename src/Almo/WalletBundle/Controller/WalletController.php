@@ -16,17 +16,6 @@ use Almo\WalletBundle\Form\OperationsType;
 class WalletController extends Controller
 {
     /**
-     * @Route("/hello/{name}" )
-     * @Template("AlmoWalletBundle:Default:index.html.twig")
-     */
-    public function indexAction($name)
-    {
-        return array(
-            'name' => $name,
-        );
-    }
-
-    /**
      * @Route("/", defaults={"act" = "pay"})
      * @Route("/wallet/{act}", defaults={"act" = "pay"}, requirements={"act" = "pay|add|transfer" } )
      * @Method ({"GET", "POST"})

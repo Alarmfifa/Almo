@@ -25,16 +25,33 @@ class PaymentsRepository extends EntityRepository
         return $query->getResult();
     }
 
-    public function getUserAccountPaymentsQuery($accountId, \Almo\UserBundle\Entity\Users $User)
+    public function getUserAccountPaymentsQuery($accountId, \Almo\UserBundle\Entity\Users $user)
     {
-        $query = $this->getEntityManager()
-            ->createQuery("SELECT p FROM Almo\WalletBundle\Entity\Payments p
-							JOIN p.accountId a
-							JOIN p.operationId o
-							WHERE a.userId = :userId and p.accountId = :accountId
-							ORDER BY o.date DESC")
-            ->setParameter('userId', $User->getId())
-            ->setParameter('accountId', $accountId);
+        $query = $this->getAllUserPaymentsQueryBuilder($user)
+            ->andWhere('p.accountId = :accountId')
+            ->setParameter('accountId', $accountId)
+            ->getQuery();
+
+        return $query;
+    }
+
+    public function getAllUserPaymentsQueryBuilder(\Almo\UserBundle\Entity\Users $user)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder()
+            ->select('p')->from('Almo\WalletBundle\Entity\Payments', 'p')
+            ->join('p.accountId', 'a')
+            ->join('p.operationId', 'o')
+            ->where('a.userId = :userId')
+            ->orderBy('o.date',  'DESC')
+            ->setParameter('userId', $user->getId());
+
+        return $qb;
+    }
+
+    public function getUserPaymentsTagsQuery(\Almo\UserBundle\Entity\Users $user)
+    {
+        $query = $this->getAllUserPaymentsQueryBuilder($user)
+            ->groupBy('o.tagId')->getQuery();
 
         return $query;
     }
