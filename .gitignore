@@ -7,8 +7,10 @@
 # Cache and logs (Symfony3)
 /var/cache/*
 /var/logs/*
+/var/sessions/*
 !var/cache/.gitkeep
 !var/logs/.gitkeep
+!var/sessions/.gitkeep
 
 # Parameters
 /app/config/parameters.yml
@@ -38,3 +40,8 @@
 
 # Composer PHAR
 /composer.phar
+
+# Eclipse
+.buildpath
+.project
+.settings/*
