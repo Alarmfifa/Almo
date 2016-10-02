@@ -15,14 +15,9 @@ class AnalyticsController extends Controller
      * @Method({"GET"})
      * @Template("AlmoWalletBundle:Analytics:analytics.html.twig")
      */
-    public function indexAction(Request $req)
+    public function indexAction()
     {
-        // get filter data from url
-        // TODO maybe put into route
-        $tagId = $req->query->get('tagId', false);
-        $dateStart = $req->query->get('dateStart', false);
-        $dateFinish = $req->query->get('dateFinish', false);
-
+ 
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
         $rep = $this->getDoctrine()->getManager()->getRepository('AlmoWalletBundle:Payments');
@@ -31,23 +26,49 @@ class AnalyticsController extends Controller
         // TODO maybe get tags directly from the entity (not from operation list)
         $tags = $rep->getUserPaymentsTagsQuery($user)->getResult();
 
-        $qb = $rep->getAllUserPaymentsQueryBuilder($user);
-
-        // add filter data to the query
-        if ($tagId) {
-            $qb->andWhere('o.tagId = :tagId')->setParameter('tagId', $tagId);
-        }
-        if ($dateStart) {
-            $qb->andWhere('o.date > :dateStart')->setParameter('dateStart', $dateStart);
-        }
-        if ($dateFinish) {
-            $qb->andWhere('o.date < :dateFinish')->setParameter('dateFinish', $dateFinish);
-        }
-        $payments = $qb->getQuery()->getResult();
-
-        // total sum (with filters)
-        $total = $qb->addSelect('SUM(p.amount) AS total')->groupBy('p.currencyId')->getQuery()->getResult();
-
-        return ['payments' => $payments, 'tags' => $tags, 'totalArr' => $total];
+        return ['tags' => $tags];
+    }
+    
+    /**
+    * 
+    * @Route("/analytics/search/")
+    * @Method({"GET"})
+    * @Template("AlmoWalletBundle:Analytics:analytics.html.twig")
+    */
+    public function historyAction(Request $req)
+    {
+    	// get filter data from url
+    	// TODO maybe put into route
+    	$tagId = $req->query->get('tagId', false);
+    	$dateStart = $req->query->get('dateStart', false);
+    	$dateFinish = $req->query->get('dateFinish', false);
+    	
+    	$user = $this->get('security.token_storage')->getToken()->getUser();
+    	
+    	$rep = $this->getDoctrine()->getManager()->getRepository('AlmoWalletBundle:Payments');
+    	
+    	// get available user tags
+    	// TODO maybe get tags directly from the entity (not from operation list)
+    	$tags = $rep->getUserPaymentsTagsQuery($user)->getResult();
+    	
+    	$qb = $rep->getAllUserPaymentsQueryBuilder($user);
+    	
+    	// add filter data to the query
+    	if ($tagId) {
+    		$qb->andWhere('o.tagId = :tagId')->setParameter('tagId', $tagId);
+    	}
+    	if ($dateStart) {
+    		$qb->andWhere('o.date > :dateStart')->setParameter('dateStart', $dateStart);
+    	}
+    	if ($dateFinish) {
+    		$qb->andWhere('o.date < :dateFinish')->setParameter('dateFinish', $dateFinish);
+    	}
+    	$payments = $qb->getQuery()->getResult();
+    	
+    	// total sum (with filters)
+    	$total = $qb->addSelect('SUM(p.amount) AS total')->groupBy('p.currencyId')->getQuery()->getResult();
+    	
+    	return ['payments' => $payments, 'tags' => $tags, 'totalArr' => $total];
+    	
     }
 }
