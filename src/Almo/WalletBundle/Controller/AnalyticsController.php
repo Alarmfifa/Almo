@@ -95,7 +95,7 @@ class AnalyticsController extends Controller
         $qb = $rep->getAllUserPaymentsQueryBuilder($user);
 
         $total = $qb->addSelect('YEAR(o.date) as ydate, MONTH(o.date) as mdate, SUM(p.amount) AS total')->groupBy('ydate, mdate, o.tagId')
-        ->andWhere('o.type = :type')->setParameter('type', $type)->orderBy('o.date',  'ASC')->getQuery()->getResult();
+        ->andWhere('o.type = :type')->andWhere('o.tagId is not null')->setParameter('type', $type)->orderBy('o.date',  'ASC')->getQuery()->getResult();
 
         $resArr = [];
         $resDateArr = [];
