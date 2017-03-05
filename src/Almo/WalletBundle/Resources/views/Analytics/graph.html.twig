@@ -1,0 +1,68 @@
+{% extends 'AlmoWalletBundle:Default:index.html.twig' %}
+
+{% block al_container_class %}
+al_status
+{% endblock al_container_class %}
+
+
+{% block slyle %}
+    {{ parent() }}
+    <script type="text/javascript" src="http://momentjs.com/downloads/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+{% endblock slyle %}
+
+{% block body %}
+
+
+
+<canvas id="myChart" style="width: auto; height: auto;"></canvas>
+
+<script>
+
+
+$.get("{{ path('almo_wallet_analytics_graphdata') }}", function( data ) {
+
+	var myChart = new Chart($("#myChart"), {
+        type: 'line',
+
+        data: {
+            datasets: data
+        },
+        options: {
+        	responsive: true,
+            scales: {
+                xAxes: [{
+                    type: 'time',
+//                     position: 'bottom',
+                    time: {
+                        displayFormats: {
+                            quarter: 'YYYY-MM'
+                        }
+                    }
+                }], 
+                yAxes: [{
+                    stacked: true
+                }]
+            },
+            hover: {
+                mode: 'index',
+               	intersect: false,
+                },
+            tooltips: {
+                mode: 'index',
+                intersect: false,
+                },
+            line : {
+                }
+        }
+    });
+
+	
+
+	  
+}, "json");
+</script>
+
+
+
+{% endblock body %}
