@@ -4,12 +4,12 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Tags.
+ * Tag.
  *
- * @ORM\Table()
- * @ORM\Entity(repositoryClass="App\Repository\TagsRepository")
+ * @ORM\Table(name="tags")
+ * @ORM\Entity(repositoryClass="App\Repository\TagRepository")
  */
-class Tags
+class Tag
 {
 
     /**
@@ -34,7 +34,7 @@ class Tags
 
     /**
      *
-     * @ORM\ManyToOne(targetEntity="Users", inversedBy="operations")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="operations")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $userId;
@@ -54,7 +54,7 @@ class Tags
      *
      * @param string $title
      *
-     * @return Tags
+     * @return Tag
      */
     public function setTitle($title)
     {
@@ -78,7 +78,7 @@ class Tags
      *
      * @param int $payType
      *
-     * @return Tags
+     * @return Tag
      */
     public function setPayType($payType)
     {
@@ -108,11 +108,11 @@ class Tags
     /**
      * Set userId.
      *
-     * @param \App\Entity\Users $userId
+     * @param \App\Entity\User $userId
      *
-     * @return Tags
+     * @return Tag
      */
-    public function setUserId(\App\Entity\Users $userId = null)
+    public function setUserId(\App\Entity\User $userId = null)
     {
         $this->userId = $userId;
 
@@ -122,7 +122,7 @@ class Tags
     /**
      * Get userId.
      *
-     * @return \App\Entity\Users
+     * @return \App\Entity\User
      */
     public function getUserId()
     {

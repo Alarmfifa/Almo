@@ -7,9 +7,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use App\Entity\Tags;
+use App\Entity\Tag;
 
-class OperationsType extends AbstractType
+class OperationType extends AbstractType
 {
 
     /**
@@ -30,7 +30,7 @@ class OperationsType extends AbstractType
             'data' => strtolower($options['act'])
         ))
             ->add('payments', CollectionType::class, array(
-            'entry_type' => PaymentsType::class,
+            'entry_type' => PaymentType::class,
             'entry_options' => (array(
                 'userId' => $options['userId'],
                 'accRep' => $options['accRep']
@@ -45,7 +45,7 @@ class OperationsType extends AbstractType
             ));
         } else {
             $builder->add('title')->add('tagId', EntityType::class, array(
-                'class' => Tags::class,
+                'class' => Tag::class,
                 'choices' => $options['tagRep']->getUserTags($options['user'], $type)
             ));
         }
@@ -58,7 +58,7 @@ class OperationsType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'App\Entity\Operations',
+            'data_class' => 'App\Entity\Operation',
             'tagRep' => false,
             'accRep' => false,
             'userId' => false,

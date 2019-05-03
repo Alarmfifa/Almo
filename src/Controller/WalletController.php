@@ -4,11 +4,11 @@ namespace App\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use App\Entity\Accounts;
-use App\Entity\Operations;
-use App\Entity\Payments;
-use App\Form\OperationsType;
-use App\Entity\Tags;
+use App\Entity\Account;
+use App\Entity\Operation;
+use App\Entity\Payment;
+use App\Form\OperationType;
+use App\Entity\Tag;
 use Knp\Component\Pager\PaginatorInterface;
 
 class WalletController extends AbstractController
@@ -21,8 +21,8 @@ class WalletController extends AbstractController
      */
     public function walletAction($act, Request $req)
     {
-        $tagRep = $this->getDoctrine()->getRepository(Tags::class);
-        $accRep = $this->getDoctrine()->getRepository(Accounts::class);
+        $tagRep = $this->getDoctrine()->getRepository(Tag::class);
+        $accRep = $this->getDoctrine()->getRepository(Account::class);
         $userId = $this->get('security.token_storage')
             ->getToken()
             ->getUser()
@@ -31,16 +31,16 @@ class WalletController extends AbstractController
             ->getToken()
             ->getUser();
 
-        $operations = new Operations();
-        $operations->addPayment(new Payments());
+        $operations = new Operation();
+        $operations->addPayment(new Payment());
         $operations->setUserId($user);
         $operations->setDate(new \DateTime());
 
         if ($act == 'transfer') {
-            $operations->addPayment(new Payments());
+            $operations->addPayment(new Payment());
         }
 
-        $form = $this->createForm(OperationsType::class, $operations, array(
+        $form = $this->createForm(OperationType::class, $operations, array(
             'tagRep' => $tagRep,
             'userId' => $userId,
             'accRep' => $accRep,
@@ -90,7 +90,7 @@ class WalletController extends AbstractController
     public function statusAction($accountId, $page, PaginatorInterface $paginator)
     {
         $em = $this->getDoctrine()->getManager();
-        $accounts = $em->getRepository('AlmoWalletBundle:Payments')->getUserAccountsStatus($this->get('security.token_storage')
+        $accounts = $em->getRepository(Payment::class)->getUserAccountsStatus($this->get('security.token_storage')
             ->getToken()
             ->getUser());
 
@@ -98,9 +98,8 @@ class WalletController extends AbstractController
 
         // show list of payments
         if ($accountId) {
-            $paginator = $this->get('knp_paginator');
 
-            $query = $em->getRepository(Payments::class)->getUserAccountPaymentsQuery($accountId, $this->get('security.token_storage')
+            $query = $em->getRepository(Payment::class)->getUserAccountPaymentsQuery($accountId, $this->get('security.token_storage')
                 ->getToken()
                 ->getUser());
 

@@ -5,7 +5,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Entity\Payments;
+use App\Entity\Payment;
 
 class AnalyticsController extends AbstractController
 {
@@ -22,7 +22,7 @@ class AnalyticsController extends AbstractController
 
         $rep = $this->getDoctrine()
             ->getManager()
-            ->getRepository(Payments::class);
+            ->getRepository(Payment::class);
 
         // get available user tags
         // TODO maybe get tags directly from the entity (not from operation list)
@@ -51,7 +51,7 @@ class AnalyticsController extends AbstractController
 
         $rep = $this->getDoctrine()
             ->getManager()
-            ->getRepository(Payments::class);
+            ->getRepository(Payment::class);
 
         // get available user tags
         // TODO maybe get tags directly from the entity (not from operation list)
@@ -107,7 +107,7 @@ class AnalyticsController extends AbstractController
 
         $rep = $this->getDoctrine()
             ->getManager()
-            ->getRepository(Payments::class);
+            ->getRepository(Payment::class);
 
         $qb = $rep->getAllUserPaymentsQueryBuilder($user);
 

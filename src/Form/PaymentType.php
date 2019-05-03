@@ -6,9 +6,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Entity\Currency;
-use App\Entity\Accounts;
+use App\Entity\Account;
 
-class PaymentsType extends AbstractType
+class PaymentType extends AbstractType
 {
 
     /**
@@ -22,7 +22,7 @@ class PaymentsType extends AbstractType
         // TODO replace accountRepository to Entity
         $builder->add('amount')
             ->add('accountId', EntityType::class, array(
-            'class' => Accounts::class,
+            'class' => Account::class,
             'choices' => $options['accRep']->findByUserId($options['userId'])
         ))
             ->add('currencyId', EntityType::class, array(
@@ -38,7 +38,7 @@ class PaymentsType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'App\Entity\Payments',
+            'data_class' => 'App\Entity\Payment',
             'userId' => false,
             'accRep' => false,
         ]);
