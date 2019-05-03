@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Repository;
 
 use Doctrine\ORM\EntityRepository;
@@ -12,6 +11,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class OperationsRepository extends EntityRepository
 {
+
     public function findAllOrderByDate()
     {
         return $this->getEntityManager()

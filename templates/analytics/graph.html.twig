@@ -6,61 +6,58 @@ al_status
 
 
 {% block slyle %}
-    {{ parent() }}
-    <script type="text/javascript" src="http://momentjs.com/downloads/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+{{ parent() }}
+<script type="text/javascript"
+	src="http://momentjs.com/downloads/moment.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 {% endblock slyle %}
 
 {% block body %}
-
-
 
 <canvas id="myChart" style="width: auto; height: auto;"></canvas>
 
 <script>
 
 
-$.get("{{ path('almo_wallet_analytics_graphdata') }}", function( data ) {
+$.get("{{ path('almo_wallet_analytics_graphdata') }}
+    ", function (data) {
 
-	var myChart = new Chart($("#myChart"), {
-        type: 'line',
+        var myChart = new Chart($("#myChart"), {
+            type : 'line',
 
-        data: {
-            datasets: data
-        },
-        options: {
-        	responsive: true,
-            scales: {
-                xAxes: [{
-                    type: 'time',
-//                     position: 'bottom',
-                    time: {
-                        displayFormats: {
-                            quarter: 'YYYY-MM'
-                        }
-                    }
-                }], 
-                yAxes: [{
-                    stacked: true
-                }]
+            data : {
+                datasets : data
             },
-            hover: {
-                mode: 'index',
-               	intersect: false,
+            options : {
+                responsive : true,
+                scales : {
+                    xAxes : [ {
+                        type : 'time',
+                        //                     position: 'bottom',
+                        time : {
+                            displayFormats : {
+                                quarter : 'YYYY-MM'
+                            }
+                        }
+                    } ],
+                    yAxes : [ {
+                        stacked : true
+                    } ]
                 },
-            tooltips: {
-                mode: 'index',
-                intersect: false,
+                hover : {
+                    mode : 'index',
+                    intersect : false,
                 },
-            line : {
-                }
-        }
-    });
+                tooltips : {
+                    mode : 'index',
+                    intersect : false,
+                },
+                line : {}
+            }
+        });
 
-	
-
-	  
-}, "json");
+    }, "json");
 </script>
 
 

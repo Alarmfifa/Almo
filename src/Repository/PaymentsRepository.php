@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Repository;
 
 use Doctrine\ORM\EntityRepository;
@@ -12,6 +11,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class PaymentsRepository extends EntityRepository
 {
+
     public function getUserAccountsStatus(\App\Entity\Users $User)
     {
         $query = $this->getEntityManager()
@@ -37,12 +37,14 @@ class PaymentsRepository extends EntityRepository
 
     public function getAllUserPaymentsQueryBuilder(\App\Entity\Users $user)
     {
-        $qb = $this->getEntityManager()->createQueryBuilder()
-            ->select('p')->from('App\Entity\Payments', 'p')
+        $qb = $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('p')
+            ->from('App\Entity\Payments', 'p')
             ->join('p.accountId', 'a')
             ->join('p.operationId', 'o')
             ->where('a.userId = :userId')
-            ->orderBy('o.date',  'DESC')
+            ->orderBy('o.date', 'DESC')
             ->setParameter('userId', $user->getId());
 
         return $qb;
@@ -51,7 +53,8 @@ class PaymentsRepository extends EntityRepository
     public function getUserPaymentsTagsQuery(\App\Entity\Users $user)
     {
         $query = $this->getAllUserPaymentsQueryBuilder($user)
-            ->groupBy('o.tagId')->getQuery();
+            ->groupBy('o.tagId')
+            ->getQuery();
 
         return $query;
     }

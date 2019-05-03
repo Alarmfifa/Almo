@@ -1,16 +1,18 @@
 <?php
-
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ *
  * @ORM\Entity(repositoryClass="App\Repository\OperationsRepository")
  * @ORM\Table()
  */
 class Operations
 {
+
     /**
+     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -18,38 +20,45 @@ class Operations
     private $id;
 
     /**
+     *
      * @ORM\ManyToOne(targetEntity="Users", inversedBy="operations")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $userId;
 
     /**
+     *
      * @ORM\Column(type="string", length=80)
      */
     private $title;
 
     /**
+     *
      * @ORM\Column(type="text", nullable=true)
      */
     private $notice;
 
     /**
+     *
      * @ORM\ManyToOne(targetEntity="Tags")
      * @ORM\JoinColumn(name="tag_id", referencedColumnName="id")
      */
     private $tagId;
 
     /**
+     *
      * @ORM\Column(type="datetime")
      */
     private $date;
 
     /**
+     *
      * @ORM\Column(type="string", length=20)
      */
     private $type;
 
     /**
+     *
      * @ORM\OneToMany(targetEntity="Payments", mappedBy="operationId", cascade={"persist"})
      */
     private $payments;

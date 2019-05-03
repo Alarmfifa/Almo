@@ -1,18 +1,19 @@
 <?php
-
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Accounts.
- * 
+ *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="App\Repository\AccountsRepository")
  */
 class Accounts
 {
+
     /**
+     *
      * @var int @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -20,17 +21,20 @@ class Accounts
     private $id;
 
     /**
+     *
      * @var string @ORM\Column(name="title", type="string", length=80)
      */
     private $title;
 
     /**
+     *
      * @var int @ORM\ManyToOne(targetEntity="Users")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $userId;
 
     /**
+     *
      * @ORM\OneToMany(targetEntity="Payments", mappedBy="accountId")
      */
     private $payments;

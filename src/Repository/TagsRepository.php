@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Repository;
 
 use Doctrine\ORM\EntityRepository;
@@ -12,6 +11,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class TagsRepository extends EntityRepository
 {
+
     public function getUserTags(\App\Entity\Users $User, $type)
     {
         $query = $this->getEntityManager()

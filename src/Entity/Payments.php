@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -12,7 +11,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Payments
 {
+
     /**
+     *
      * @var int @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -20,23 +21,27 @@ class Payments
     private $id;
 
     /**
+     *
      * @var int @ORM\ManyToOne(targetEntity="Operations", inversedBy="payments")
      * @ORM\JoinColumn(name="operation_id", referencedColumnName="id")
      */
     private $operationId;
 
     /**
+     *
      * @var int @ORM\ManyToOne(targetEntity="Accounts", inversedBy="payments")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id")
      */
     private $accountId;
 
     /**
+     *
      * @var float @ORM\Column(name="amount", type="float")
      */
     private $amount;
 
     /**
+     *
      * @var int @ORM\ManyToOne(targetEntity="Currency")
      * @ORM\JoinColumn(name="currency_id", referencedColumnName="id")
      */

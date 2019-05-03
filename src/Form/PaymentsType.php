@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
@@ -11,9 +10,11 @@ use App\Entity\Accounts;
 
 class PaymentsType extends AbstractType
 {
+
     /**
+     *
      * @param FormBuilderInterface $builder
-     * @param array                $options
+     * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -22,15 +23,16 @@ class PaymentsType extends AbstractType
         $builder->add('amount')
             ->add('accountId', EntityType::class, array(
             'class' => Accounts::class,
-            'choices' => $options['accRep']->findByUserId($options['userId']),
+            'choices' => $options['accRep']->findByUserId($options['userId'])
         ))
             ->add('currencyId', EntityType::class, array(
             'class' => Currency::class,
-            'choice_label' => 'short',
+            'choice_label' => 'short'
         ));
     }
 
     /**
+     *
      * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
