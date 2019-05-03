@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
@@ -8,13 +7,15 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use App\Entity\Tags;
+use App\Entity\Tag;
 
-class OperationsType extends AbstractType
+class OperationType extends AbstractType
 {
+
     /**
+     *
      * @param FormBuilderInterface $builder
-     * @param array                $options
+     * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -23,40 +24,41 @@ class OperationsType extends AbstractType
         $builder->add('notice')
             ->add('date', null, array(
             'widget' => 'single_text',
-            'format' => 'yyyy-MM-dd HH:mm',
+            'format' => 'yyyy-MM-dd HH:mm'
         ))
             ->add('type', HiddenType::class, array(
-            'data' => strtolower($options['act']),
+            'data' => strtolower($options['act'])
         ))
             ->add('payments', CollectionType::class, array(
-            'entry_type' => PaymentsType::class,
+            'entry_type' => PaymentType::class,
             'entry_options' => (array(
                 'userId' => $options['userId'],
-                'accRep' => $options['accRep'],
-            )),
+                'accRep' => $options['accRep']
+            ))
         ));
 
         if ($options['act'] == 'transfer') {
             $builder->add('title', HiddenType::class, array(
-                'data' => 'Exchange',
+                'data' => 'Exchange'
             ))->add('tagId', HiddenType::class, array(
-                'data' => null,
+                'data' => null
             ));
         } else {
             $builder->add('title')->add('tagId', EntityType::class, array(
-                'class' => Tags::class,
-                'choices' => $options['tagRep']->getUserTags($options['user'], $type),
+                'class' => Tag::class,
+                'choices' => $options['tagRep']->getUserTags($options['user'], $type)
             ));
         }
     }
 
     /**
+     *
      * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'App\Entity\Operations',
+            'data_class' => 'App\Entity\Operation',
             'tagRep' => false,
             'accRep' => false,
             'userId' => false,

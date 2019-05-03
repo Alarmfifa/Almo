@@ -1,18 +1,20 @@
 <?php
-
 namespace App\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
 class Wallet
 {
+
     /**
+     *
      * @Assert\NotBlank(message = "Enter date please")
      * @Assert\Type("\DateTime")
      */
     protected $date;
 
     /**
+     *
      * @Assert\Length(min=10)
      * @Assert\NotBlank()
      */

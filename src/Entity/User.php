@@ -1,17 +1,19 @@
 <?php
-
 namespace App\Entity;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ *
  * @ORM\Entity
- * @ORM\Table(name="Users")
+ * @ORM\Table(name="users")
  */
-class Users implements UserInterface
+class User implements UserInterface
 {
+
     /**
+     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -19,21 +21,25 @@ class Users implements UserInterface
     private $id;
 
     /**
+     *
      * @ORM\Column(type="string", length=30, unique=true)
      */
     private $login;
 
     /**
+     *
      * @ORM\Column(type="string", length=64)
      */
     private $password;
 
     /**
+     *
      * @ORM\Column(type="datetime")
      */
     private $registration_date;
 
     /**
+     *
      * @ORM\Column(type="boolean")
      */
     private $active;
@@ -53,7 +59,7 @@ class Users implements UserInterface
      *
      * @param string $login
      *
-     * @return Users
+     * @return User
      */
     public function setLogin($login)
     {
@@ -77,7 +83,7 @@ class Users implements UserInterface
      *
      * @param string $password
      *
-     * @return Users
+     * @return User
      */
     public function setPassword($password)
     {
@@ -101,7 +107,7 @@ class Users implements UserInterface
      *
      * @param \DateTime $registrationDate
      *
-     * @return Users
+     * @return User
      */
     public function setRegistrationDate($registrationDate)
     {
@@ -125,7 +131,7 @@ class Users implements UserInterface
      *
      * @param bool $active
      *
-     * @return Users
+     * @return User
      */
     public function setActive($active)
     {
@@ -148,7 +154,7 @@ class Users implements UserInterface
     {
         // everybody are users
         return array(
-            'ROLE_USER',
+            'ROLE_USER'
         );
     }
 
@@ -159,8 +165,7 @@ class Users implements UserInterface
     }
 
     public function eraseCredentials()
-    {
-    }
+    {}
 
     public function getUsername()
     {

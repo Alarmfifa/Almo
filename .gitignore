@@ -11,3 +11,8 @@
 ###> symfony/web-server-bundle ###
 /.web-server-pid
 ###< symfony/web-server-bundle ###
+
+### eclipse files ###
+/.buildpath
+/.settings/
+/.project

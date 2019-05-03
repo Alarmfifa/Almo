@@ -5,79 +5,91 @@ al_status
 {% endblock al_container_class %}
 
 {% block body %}
-    
-<div>
-    <form class="form-horizontal" action="{{ path('app_analytics_history')}}" method="get">
-        <div class="form-group">
-            <label class="col-sm-offset-3 col-sm-2 control-label">От:</label>
-            <div class="col-sm-3"><input class="form-control datepicker" name="dateStart" value="{{ app.request.get('dateStart') }}"></div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-offset-3 col-sm-2 control-label">До:</label>
-            <div class="col-sm-3"><input class="form-control datepicker" name="dateFinish" value="{{ app.request.get('dateFinish') }}"></div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-offset-3 col-sm-2 control-label">Тег:</label>
-            <div class="col-sm-3">
-                <select id="operations_payments_0_accountId" name="tagId" class="form-control">
-                    <option value="0" {% if app.request.get('tagId') == 0 %} selected="selected" {% endif %}>Любой</option>
-                    {% for tag in tags %}
-                        {% if tag.operationId.tagId is not null %}
-                        <option value="{{ tag.operationId.tagId.id }}" {% if app.request.get('tagId') == tag.operationId.tagId.id %} selected="selected" {% endif %}>{{ tag.operationId.tagId }}</option>
-                        {% endif %}
-                    {% endfor %}
-                </select>
-            </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-sm-offset-4 col-sm-3">
-                <button type="submit" class="btn btn-default">Найти</button>
-            </div>
-        </div>
-    </form>
+<div>
+	<form class="form-horizontal"
+		action="{{ path('app_analytics_history')}}" method="get">
+		<div class="form-group">
+			<label class="col-sm-offset-3 col-sm-2 control-label">От:</label>
+			<div class="col-sm-3">
+				<input class="form-control datepicker" name="dateStart"
+					value="{{ app.request.get('dateStart') }}">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-offset-3 col-sm-2 control-label">До:</label>
+			<div class="col-sm-3">
+				<input class="form-control datepicker" name="dateFinish"
+					value="{{ app.request.get('dateFinish') }}">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-offset-3 col-sm-2 control-label">Тег:</label>
+			<div class="col-sm-3">
+				<select id="operations_payments_0_accountId" name="tagId"
+					class="form-control">
+					<option value="0" {% if app.request.get('tagId') == 0 %}
+						selected="selected" {% endif %}>Любой</option>
+					{% for tag in tags %}
+					{% if tag.operationId.tagId is not null %}
+					<option value="{{ tag.operationId.tagId.id }}"
+						{% if app.request.get('tagId') == tag.operationId.tagId.id %}
+						selected="selected" {% endif %}>{{ tag.operationId.tagId }}</option>
+					{% endif %}
+					{% endfor %}
+				</select>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-sm-offset-4 col-sm-3">
+				<button type="submit" class="btn btn-default">Найти</button>
+			</div>
+		</div>
+	</form>
 </div>
 
 {% if payments is defined and payments is not empty %}
 
 <table class="table table-condensed table-hover">
-    <thead>
-        <tr>
-            <th>Наименование</th>
-            <th>Тег</th>
-            <th>Стоимость</th>
-            <th>Счёт</th>
-            <th>Дата</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for payment in payments %}
-        <tr {% if payment.operationId.notice is not empty %}
-            class="al_operation_needs_detail info" {% endif %}>
-            <td><span>{{ payment.operationId.title }}</span></td>
-            <td>{{ payment.operationId.tagId }}</td>
-            <td>{{ payment.amount|round(1) }} {{ payment.currencyId.short }}</td>
-            <td>{{ payment.accountId.title }}</td>
-            <td>{{ payment.operationId.date|date("Y-m-d H:i") }}</td>
-        </tr>
-        {% if payment.operationId.notice is not empty %}
-        <tr class="al_operation_detail_row">
-            <td colspan="4"><span class="glyphicon glyphicon-info-sign"
-                aria-hidden="true"></span> <span>{{ payment.operationId.notice }}</span>
-            </td>
-        </tr>
-        {% endif %}
-        {% endfor %}
-    </tbody>
+	<thead>
+		<tr>
+			<th>Наименование</th>
+			<th>Тег</th>
+			<th>Стоимость</th>
+			<th>Счёт</th>
+			<th>Дата</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for payment in payments %}
+		<tr {% if payment.operationId.notice is not empty %}
+			class="al_operation_needs_detail info" {% endif %}>
+			<td><span>{{ payment.operationId.title }}</span></td>
+			<td>{{ payment.operationId.tagId }}</td>
+			<td>{{ payment.amount|round(1) }} {{ payment.currencyId.short }}</td>
+			<td>{{ payment.accountId.title }}</td>
+			<td>{{ payment.operationId.date|date("Y-m-d H:i") }}</td>
+		</tr>
+		{% if payment.operationId.notice is not empty %}
+		<tr class="al_operation_detail_row">
+			<td colspan="4"><span class="glyphicon glyphicon-info-sign"
+				aria-hidden="true"></span> <span>{{ payment.operationId.notice }}</span>
+			</td>
+		</tr>
+		{% endif %}
+		{% endfor %}
+	</tbody>
 </table>
 
 <div class="panel panel-default">
-    <div class="panel-body">
-        Итого: 
-        {% for total in totalArr %}
-            {{ total.total }}{{ total.0.currencyId }}
-        {% endfor %}
-    </div>
+	<div class="panel-body">
+		Итого:
+		{% for total in totalArr %}
+		{{ total.total }}
+		{{ total.0.currencyId }}
+		{% endfor %}
+	</div>
 </div>
 
 {% endif %}

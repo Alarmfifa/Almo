@@ -1,18 +1,19 @@
 <?php
-
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Accounts.
- * 
- * @ORM\Table()
- * @ORM\Entity(repositoryClass="App\Repository\AccountsRepository")
+ *
+ * @ORM\Table(name="accounts")
+ * @ORM\Entity(repositoryClass="App\Repository\AccountRepository")
  */
-class Accounts
+class Account
 {
+
     /**
+     *
      * @var int @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -20,18 +21,21 @@ class Accounts
     private $id;
 
     /**
+     *
      * @var string @ORM\Column(name="title", type="string", length=80)
      */
     private $title;
 
     /**
-     * @var int @ORM\ManyToOne(targetEntity="Users")
+     *
+     * @var int @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $userId;
 
     /**
-     * @ORM\OneToMany(targetEntity="Payments", mappedBy="accountId")
+     *
+     * @ORM\OneToMany(targetEntity="Payment", mappedBy="accountId")
      */
     private $payments;
 
@@ -50,7 +54,7 @@ class Accounts
      *
      * @param string $title
      *
-     * @return Accounts
+     * @return Account
      */
     public function setTitle($title)
     {
@@ -74,7 +78,7 @@ class Accounts
      *
      * @param int $userId
      *
-     * @return Accounts
+     * @return Account
      */
     public function setUserId($userId)
     {
@@ -112,13 +116,13 @@ class Accounts
     /**
      * Add payments.
      *
-     * @param \App\Entity\Payments $payments
+     * @param \App\Entity\Payment $payments
      *
-     * @return Accounts
+     * @return Account
      */
-    public function addPayment(\App\Entity\Payments $payments)
+    public function addPayment(\App\Entity\Payment $payment)
     {
-        $this->payments[] = $payments;
+        $this->payments[] = $payment;
 
         return $this;
     }
@@ -126,11 +130,11 @@ class Accounts
     /**
      * Remove payments.
      *
-     * @param \App\Entity\Payments $payments
+     * @param \App\Entity\Payment $payments
      */
-    public function removePayment(\App\Entity\Payments $payments)
+    public function removePayment(\App\Entity\Payment $payment)
     {
-        $this->payments->removeElement($payments);
+        $this->payments->removeElement($payment);
     }
 
     /**

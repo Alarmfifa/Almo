@@ -1,32 +1,40 @@
 <?php
-
 namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Entity\Payments;
+use App\Entity\Payment;
 
 class AnalyticsController extends AbstractController
 {
+
     /**
+     *
      * @Route("/analytics/", methods = {"GET"})
      */
     public function indexAction()
     {
-        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $user = $this->get('security.token_storage')
+            ->getToken()
+            ->getUser();
 
-        $rep = $this->getDoctrine()->getManager()->getRepository(Payments::class);
+        $rep = $this->getDoctrine()
+            ->getManager()
+            ->getRepository(Payment::class);
 
         // get available user tags
         // TODO maybe get tags directly from the entity (not from operation list)
         $tags = $rep->getUserPaymentsTagsQuery($user)->getResult();
 
-        return $this->render('analytics/analytics.html.twig', ['tags' => $tags]);
+        return $this->render('analytics/analytics.html.twig', [
+            'tags' => $tags
+        ]);
     }
 
     /**
+     *
      * @Route("/analytics/search/", methods={"GET"})
      */
     public function historyAction(Request $req)
@@ -37,9 +45,13 @@ class AnalyticsController extends AbstractController
         $dateStart = $req->query->get('dateStart', false);
         $dateFinish = $req->query->get('dateFinish', false);
 
-        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $user = $this->get('security.token_storage')
+            ->getToken()
+            ->getUser();
 
-        $rep = $this->getDoctrine()->getManager()->getRepository(Payments::class);
+        $rep = $this->getDoctrine()
+            ->getManager()
+            ->getRepository(Payment::class);
 
         // get available user tags
         // TODO maybe get tags directly from the entity (not from operation list)
@@ -60,12 +72,20 @@ class AnalyticsController extends AbstractController
         $payments = $qb->getQuery()->getResult();
 
         // total sum (with filters)
-        $total = $qb->addSelect('SUM(p.amount) AS total')->groupBy('p.currencyId')->getQuery()->getResult();
+        $total = $qb->addSelect('SUM(p.amount) AS total')
+            ->groupBy('p.currencyId')
+            ->getQuery()
+            ->getResult();
 
-        return $this->render('analytics/analytics.html.twig', ['payments' => $payments, 'tags' => $tags, 'totalArr' => $total]);
+        return $this->render('analytics/analytics.html.twig', [
+            'payments' => $payments,
+            'tags' => $tags,
+            'totalArr' => $total
+        ]);
     }
 
     /**
+     *
      * @Route("/analytics/graph/", methods={"GET"})
      */
     public function graphAction(Request $req)
@@ -74,21 +94,31 @@ class AnalyticsController extends AbstractController
     }
 
     /**
+     *
      * @Route("/analytics/graph-data/{type}/{group}", defaults={"type" : "pay", "group" : "month"}, requirements={"type" : "pay|add", "group" : "month|year"}, methods={"GET"} )
      */
     public function graphDataAction(Request $req, $type, $group)
     {
 
-        //TODO add filters!
+        // TODO add filters!
+        $user = $this->get('security.token_storage')
+            ->getToken()
+            ->getUser();
 
-        $user = $this->get('security.token_storage')->getToken()->getUser();
-
-        $rep = $this->getDoctrine()->getManager()->getRepository(Payments::class);
+        $rep = $this->getDoctrine()
+            ->getManager()
+            ->getRepository(Payment::class);
 
         $qb = $rep->getAllUserPaymentsQueryBuilder($user);
 
-        $total = $qb->addSelect('YEAR(o.date) as ydate, MONTH(o.date) as mdate, SUM(p.amount) AS total')->groupBy('ydate, mdate, o.tagId')
-        ->andWhere('o.type = :type')->andWhere('o.tagId is not null')->setParameter('type', $type)->orderBy('o.date',  'ASC')->getQuery()->getResult();
+        $total = $qb->addSelect('YEAR(o.date) as ydate, MONTH(o.date) as mdate, SUM(p.amount) AS total')
+            ->groupBy('ydate, mdate, o.tagId')
+            ->andWhere('o.type = :type')
+            ->andWhere('o.tagId is not null')
+            ->setParameter('type', $type)
+            ->orderBy('o.date', 'ASC')
+            ->getQuery()
+            ->getResult();
 
         $resArr = [];
         $resDateArr = [];
@@ -96,23 +126,36 @@ class AnalyticsController extends AbstractController
         $data = [];
 
         foreach ($total as $k => $v) {
-            $graph = $v[0]->getOperationId()->getTagId()->getTitle();
-            if (!\in_array($graph, $graphs)) {
+            $graph = $v[0]->getOperationId()
+                ->getTagId()
+                ->getTitle();
+            if (! \in_array($graph, $graphs)) {
                 $graphs[] = $graph;
             }
 
-            $resDateArr[$v[0]->getOperationId()->getDate()->format('Y-m')][$graph] = abs($v['total']);
+            $resDateArr[$v[0]->getOperationId()
+                ->getDate()
+                ->format('Y-m')][$graph] = abs($v['total']);
         }
 
         foreach ($resDateArr as $k => $v) {
             foreach ($graphs as $graph) {
                 $val = (isset($v[$graph])) ? $v[$graph] : 0;
-                $resArr[$graph][] = ['x' => $k, 'y' => $val];
+                $resArr[$graph][] = [
+                    'x' => $k,
+                    'y' => $val
+                ];
             }
         }
 
         foreach ($resArr as $k => $v) {
-            $data[] = ['label' => $k, 'data' => $v, 'lineTension' => 0, 'spanGaps' => false, 'fill' => false];
+            $data[] = [
+                'label' => $k,
+                'data' => $v,
+                'lineTension' => 0,
+                'spanGaps' => false,
+                'fill' => false
+            ];
         }
 
         return new Response(\json_encode($data));

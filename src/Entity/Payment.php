@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -7,12 +6,14 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Payments.
  *
- * @ORM\Table()
- * @ORM\Entity(repositoryClass="App\Repository\PaymentsRepository")
+ * @ORM\Table(name="payments")
+ * @ORM\Entity(repositoryClass="App\Repository\PaymentRepository")
  */
-class Payments
+class Payment
 {
+
     /**
+     *
      * @var int @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -20,23 +21,27 @@ class Payments
     private $id;
 
     /**
-     * @var int @ORM\ManyToOne(targetEntity="Operations", inversedBy="payments")
+     *
+     * @var int @ORM\ManyToOne(targetEntity="Operation", inversedBy="payments")
      * @ORM\JoinColumn(name="operation_id", referencedColumnName="id")
      */
     private $operationId;
 
     /**
-     * @var int @ORM\ManyToOne(targetEntity="Accounts", inversedBy="payments")
+     *
+     * @var int @ORM\ManyToOne(targetEntity="Account", inversedBy="payments")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id")
      */
     private $accountId;
 
     /**
+     *
      * @var float @ORM\Column(name="amount", type="float")
      */
     private $amount;
 
     /**
+     *
      * @var int @ORM\ManyToOne(targetEntity="Currency")
      * @ORM\JoinColumn(name="currency_id", referencedColumnName="id")
      */
@@ -57,7 +62,7 @@ class Payments
      *
      * @param int $operationId
      *
-     * @return Payments
+     * @return Payment
      */
     public function setOperationId($operationId)
     {
@@ -81,7 +86,7 @@ class Payments
      *
      * @param int $accountId
      *
-     * @return Payments
+     * @return Payment
      */
     public function setAccountId($accountId)
     {
@@ -105,7 +110,7 @@ class Payments
      *
      * @param float $amount
      *
-     * @return Payments
+     * @return Payment
      */
     public function setAmount($amount)
     {
@@ -129,7 +134,7 @@ class Payments
      *
      * @param int $currencyId
      *
-     * @return Payments
+     * @return Payment
      */
     public function setCurrencyId($currencyId)
     {

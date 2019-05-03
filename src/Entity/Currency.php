@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -12,7 +11,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Currency
 {
+
     /**
+     *
      * @var int @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -20,11 +21,13 @@ class Currency
     private $id;
 
     /**
+     *
      * @var string @ORM\Column(name="title", type="string", length=20)
      */
     private $title;
 
     /**
+     *
      * @var string @ORM\Column(name="short", type="string", length=5)
      */
     private $short;

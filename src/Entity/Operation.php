@@ -1,16 +1,18 @@
 <?php
-
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\OperationsRepository")
- * @ORM\Table()
+ *
+ * @ORM\Entity(repositoryClass="App\Repository\OperationRepository")
+ * @ORM\Table(name="operations")
  */
-class Operations
+class Operation
 {
+
     /**
+     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -18,39 +20,46 @@ class Operations
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Users", inversedBy="operations")
+     *
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="operations")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $userId;
 
     /**
+     *
      * @ORM\Column(type="string", length=80)
      */
     private $title;
 
     /**
+     *
      * @ORM\Column(type="text", nullable=true)
      */
     private $notice;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Tags")
+     *
+     * @ORM\ManyToOne(targetEntity="Tag")
      * @ORM\JoinColumn(name="tag_id", referencedColumnName="id")
      */
     private $tagId;
 
     /**
+     *
      * @ORM\Column(type="datetime")
      */
     private $date;
 
     /**
+     *
      * @ORM\Column(type="string", length=20)
      */
     private $type;
 
     /**
-     * @ORM\OneToMany(targetEntity="Payments", mappedBy="operationId", cascade={"persist"})
+     *
+     * @ORM\OneToMany(targetEntity="Payment", mappedBy="operationId", cascade={"persist"})
      */
     private $payments;
 
@@ -69,7 +78,7 @@ class Operations
      *
      * @param int $userId
      *
-     * @return Operations
+     * @return Operation
      */
     public function setUserId($userId)
     {
@@ -93,7 +102,7 @@ class Operations
      *
      * @param string $title
      *
-     * @return Operations
+     * @return Operation
      */
     public function setTitle($title)
     {
@@ -117,7 +126,7 @@ class Operations
      *
      * @param \DateTime $date
      *
-     * @return Operations
+     * @return Operation
      */
     public function setDate($date)
     {
@@ -141,7 +150,7 @@ class Operations
      *
      * @param string $notice
      *
-     * @return Operations
+     * @return Operation
      */
     public function setNotice($notice)
     {
@@ -163,11 +172,11 @@ class Operations
     /**
      * Set tagId.
      *
-     * @param \App\Entity\Tags $tagId
+     * @param \App\Entity\Tag $tagId
      *
-     * @return Operations
+     * @return Operation
      */
-    public function setTagId(\App\Entity\Tags $tagId = null)
+    public function setTagId(\App\Entity\Tag $tagId = null)
     {
         $this->tagId = $tagId;
 
@@ -177,7 +186,7 @@ class Operations
     /**
      * Get tagId.
      *
-     * @return \App\Entity\Tags
+     * @return \App\Entity\Tag
      */
     public function getTagId()
     {
@@ -189,7 +198,7 @@ class Operations
      *
      * @param string $type
      *
-     * @return Operations
+     * @return Operation
      */
     public function setType($type)
     {
@@ -219,15 +228,15 @@ class Operations
     /**
      * Add payments.
      *
-     * @param \App\Entity\Payments $payments
+     * @param \App\Entity\Payment $payments
      *
-     * @return Operations
+     * @return Operation
      */
-    public function addPayment(\App\Entity\Payments $payments)
+    public function addPayment(\App\Entity\Payment $payment)
     {
         // don't forget to add reference id
-        $payments->setOperationId($this);
-        $this->payments[] = $payments;
+        $payment->setOperationId($this);
+        $this->payments[] = $payment;
 
         return $this;
     }
@@ -235,11 +244,11 @@ class Operations
     /**
      * Remove payments.
      *
-     * @param \App\Entity\Payments $payments
+     * @param \App\Entity\Payment $payments
      */
-    public function removePayment(\App\Entity\Payments $payments)
+    public function removePayment(\App\Entity\Payment $payment)
     {
-        $this->payments->removeElement($payments);
+        $this->payments->removeElement($payment);
     }
 
     /**

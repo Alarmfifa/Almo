@@ -2,13 +2,12 @@
 <html>
 <head>
 {% block slyle %}
-<link href="{{ asset('assets/css/bootstrap.min.css') }}"
+<link href="{{ asset('assets/css/bootstrap.min.css') }}" type="text/css"
+	rel="stylesheet">
+<link href="{{ asset('assets/css/jquery.datetimepicker.css') }}"
 	type="text/css" rel="stylesheet">
-<link
-	href="{{ asset('assets/css/jquery.datetimepicker.css') }}"
-	type="text/css" rel="stylesheet">
-<link href="{{ asset('assets/css/wallet.css') }}"
-	type="text/css" rel="stylesheet">
+<link href="{{ asset('assets/css/wallet.css') }}" type="text/css"
+	rel="stylesheet">
 
 <script type="text/javascript"
 	src="{{ asset('assets/js/jquery-2.1.3.min.js') }}"></script>
@@ -16,8 +15,7 @@
 	src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
 <script type="text/javascript"
 	src="{{ asset('assets/js/jquery.datetimepicker.js') }}"></script>
-<script type="text/javascript"
-	src="{{ asset('assets/js/wallet.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/wallet.js') }}"></script>
 
 <link rel="icon" type="image/x-icon" href="/favicon.ico">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -38,30 +36,27 @@
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand"
-				href="{{ path('app_wallet_wallet') }}">AlMoney</a>
+			<a class="navbar-brand" href="{{ path('app_wallet_wallet') }}">AlMoney</a>
 		</div>
 
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse"
 			id="bs-example-navbar-collapse-1">
-			<ul class="nav navbar-nav"> 
+			<ul class="nav navbar-nav">
 				{% block main_links %}
-				<li
-					{% if app.request.get('_route') == 'app_wallet_wallet_1' %}
+				<li {% if app.request.get('_route') == 'app_wallet_wallet_1' %}
 					class="active" {% endif %}><a
 					href="{{ path('app_wallet_wallet_1') }}">Кошелек<span
 						class="sr-only">(current)</span></a></li>
-				<li
-					{% if app.request.get('_route') == 'app_wallet_status' %}
+				<li {% if app.request.get('_route') == 'app_wallet_status' %}
 					class="active" {% endif %}><a
 					href="{{ path('app_wallet_status') }}">Состояние</a></li>
 				<li>
 				<li
-                    {% if app.request.get('_route') == 'almo_wallet_analytics_index' %}
-                    class="active" {% endif %}><a
-                    href="{{ path('app_analytics_index') }}">Аналитика</a></li>
-                <li><a href="#">Настройки</a></li>
+					{% if app.request.get('_route') == 'almo_wallet_analytics_index' %}
+					class="active" {% endif %}><a
+					href="{{ path('app_analytics_index') }}">Аналитика</a></li>
+				<li><a href="#">Настройки</a></li>
 				{% endblock %}
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
