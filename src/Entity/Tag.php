@@ -77,7 +77,6 @@ class Tag
      * Set payType.
      *
      * @param int $payType
-     *
      * @return Tag
      */
     public function setPayType($payType)
@@ -109,7 +108,6 @@ class Tag
      * Set userId.
      *
      * @param \App\Entity\User $userId
-     *
      * @return Tag
      */
     public function setUserId(\App\Entity\User $userId = null)
